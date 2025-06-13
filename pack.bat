@@ -1,0 +1,1 @@
+pyinstaller -F -w -i res\ccdownload.ico --version-file version ccdownload.py

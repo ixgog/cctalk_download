@@ -1,0 +1,11 @@
+__pycache__/
+userdata/
+config/
+build/
+dist/
+log/
+
+test**.py
+.DS_Store
+*.log
+*.spec
