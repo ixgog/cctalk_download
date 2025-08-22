@@ -16,6 +16,10 @@ from myqss import QSS_MACOS
 # 设置环境变量
 utils.setExport('PYPPETEER_DOWNLOAD_HOST', 'http://npm.taobao.org/mirrors')
 
+# 可指定 PC 已下载的浏览器，跳过 pyppeteer 下载浏览器的步骤
+# e.g. browser_path = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
+browser_path = None
+
 from pyppeteer import launcher
 launcher.DEFAULT_ARGS.remove("--enable-automation")
 from pyppeteer import launch
@@ -64,7 +68,7 @@ class asyncRequest(QThread):
                 else:
                     self.signal.emit(False, response.text())
             elif self.model == "POST":
-                response = response.post(self.url, headers=self.headers, data=self.data)
+                response = requests.post(self.url, headers=self.headers, data=self.data)
                 if response.status_code == 200:
                     self.signal.emit(True, response.text())
                 else:
@@ -783,6 +787,7 @@ class CCtalkLogin(object):
                 'handleSIGTERM': False,
                 'handleSIGHUP': False,
                 'userDataDir': curPath + '/userdata',
+                'executablePath': browser_path,
                 'args': [
                     '--no-sandbox',
                     '--disable-infobars',  # 关闭自动化提示框
